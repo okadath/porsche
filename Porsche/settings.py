@@ -68,7 +68,7 @@ MIDDLEWARE = [
     # 'user_account.middleware_one_session.OneSessionPerUserMiddleware',
 ]
 
-ROOT_URLCONF = 'OnlineEXP.urls'
+ROOT_URLCONF = 'Porsche.urls'
 
 TEMPLATES = [
     {
@@ -86,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'OnlineEXP.wsgi.application'
+WSGI_APPLICATION = 'Porsche.wsgi.application'
 
 
 # Database
@@ -210,5 +210,5 @@ DESTINATARIOS_TE=["admin@glsteamedition.com"]
 # DESTINATARIOS_TE=["cgltoluca@gmail.com"]
 
 
-DEFAULT_FILE_STORAGE = 'OnlineEXP.storage.ASCIIFileSystemStorage'
+DEFAULT_FILE_STORAGE = 'Porsche.storage.ASCIIFileSystemStorage'
 # AUTH_PASSWORD_VALIDATORS = []
