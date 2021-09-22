@@ -1,0 +1,128 @@
+{% extends './base/base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block title %} Login {% endblock %}
+{% block description %} Welcome to Volkswagen NAR Supplier Quality Day 2021 {% endblock %}
+{% block content %}
+    <!--
+    BEGINS CONTENT
+    -->
+    <div class="page-header register-page header-filter" filter-color="black" style=" padding-bottom: 50px;">
+      <div class="container">
+      <br>
+        <div class="row">
+          <div class="col-lg-7 col-md-6 col-sm-8 ml-auto mr-auto m-4">
+            <form class="form" method="POST" action= "{% url 'login' %}">
+              {% csrf_token %}
+              <div class="card card-login card-hidden">
+                <div class="card-header card-header-danger text-center">
+                    <h2 class="card-title">Welcome</h2>
+                    <img HIDDEN class="img-fluid p-0 m--2" src="https://www.redviva.com/lacumbreglobal/wp-content/uploads/sites/2/2019/10/logo.png">
+                    <img class="img-fluid p-0 m--3" src="{% static 'assets/img/Registro_V4.jpeg' %}" style="max-height: 400px;">
+                    <br>
+                    <br>
+                    <p>
+                        To access you will need the <b>code</b> you received by
+                        <b>email</b>. If you have already check your <b>email</b> inbox and you didnt received your <b>code</b>.
+                        <br>
+                        Please click on the Support button and we will help you out.
+                        <a hidden href="" data-toggle="modal" data-target="#exampleModal"><span style="background-color: #2696C2; padding:0 6px; border-radius: 30%; color: white;">&#63;</span></a>
+                    </p>
+                </div>
+                  {% if error_messages %}
+                      <br>
+                        <div class="alert alert-warning">
+                        {% autoescape off %}
+                            <center>
+                            <strong>{{mail}}<br>{{ error_messages }}</strong>
+                            </center>
+                        {% endautoescape %}
+                        </div>  
+                        {% endif %}
+                  {% if time_messages %}
+                      <br>
+                        <div class="alert alert-warning" center>
+                            <strong>{{ time_messages }}</strong>
+                        </div>  
+                        {% endif %}
+                <div class="card-body ">
+                  <span class="bmd-form-group">
+                  </span>
+                  <span class="bmd-form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                              <i class="material-icons">lock</i>
+                        </span>
+                      </div>
+                      <!-- <input type="email" class="form-control" placeholder="Email"> -->
+                      <input  name="username" id="id_username" class="form-control" placeholder="Enter your code" required>
+                    </div>
+                  </span>
+                    <br>
+<!--                   <span class="bmd-form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">mail</i>
+                        </span>
+                      </div>
+                      <input type="text" name="password" required id="id_password" placeholder="Email" class="form-control" required>
+                    </div>
+                  </span> -->
+                    <center>
+                        <button  class="btn btn-warning mt-1" type="submit"> Access Now </button>
+                    </center>
+
+                                  {% if error_messages %}
+                                      <center>
+                                      <a HIDDEN href= "{% url 'register' %}" class="btn btn-lg btn-success">Click here to Register today</a>
+                                      <br>
+                                      <br>
+                                      </center>
+
+                        {% endif %}
+                </div>
+                <div class="card-footer justify-content-center">
+                  <!-- ponerle type="submit" es importante! -->
+                       <!--  <a href="#pablo" class="btn btn-danger mt-4">INGRESAR</a> -->
+
+
+                  <!-- ponerle type="submit" es importante! -->
+                       <!--  <a href="#pablo" class="btn btn-danger mt-4">INGRESAR</a> -->
+                    <center>
+                        <small >
+                            <br>
+                            The use of the platform implies acceptance of the <a class="font-weight-bold text-primary" target="_blank" href="{% static 'assets/AVISO_DE_PRIVACIDAD_Proveedores_marzo2021eng.pdf' %}"><u>Privacy Policies</u></a> provided by the organizer.</small>
+                    </center>
+                </div>
+              </div>
+            </form>
+          </div>
+            </div>
+          </div>
+        </div>
+        <!--modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ejemplo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img class="img-fluid" src="{% static 'assets/img/ejemplo-pedido-2.jpeg' %}">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    <!--
+    ENDS CONTENT
+    -->
+{% endblock %}
