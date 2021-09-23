@@ -1,4 +1,4 @@
-from OnlineEXP.celery import app
+from Porsche.celery import app
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 
