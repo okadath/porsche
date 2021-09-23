@@ -70,6 +70,11 @@ def register_cumbre(request):
     #if request.user.is_authenticated:
         #aqui tenemos que cambiar el slugroom o usar uno main, que bien este podria ser el main
      #   return HttpResponseRedirect(reverse('room', kwargs={'slug':"gls-online",'slug_room':"1-Programming"}))
+    # dummy control, luego quito los links de las templates
+    if control[0].free_page ==True: 
+        # print("a")
+        return HttpResponseRedirect(reverse('room', kwargs={'slug':control[0].event_in_mainpage.slug,
+        'slug_room':control[0].room_in_mainpage.slug}))
     if request.method == 'POST':
         mail=request.POST["email"].lower().replace(" ", "")
         # print(request.method)
@@ -119,6 +124,10 @@ def login_cumbre(request):
     context = {}
     control=ControlDeploy.objects.all()
     context["control"]=control[0]
+    if control[0].free_page ==True: 
+        # print("a")
+        return HttpResponseRedirect(reverse('room', kwargs={'slug':control[0].event_in_mainpage.slug,
+        'slug_room':control[0].room_in_mainpage.slug}))
     if request.user.is_authenticated:
         #aqui tenemos que cambiar el slugroom o usar uno main, que bien este podria ser el main
         Event_User.objects.create(user=request.user,event=control[0].event_in_mainpage)
@@ -133,19 +142,6 @@ def login_cumbre(request):
 # /event/gls-online/
     if request.method == 'POST':
         email = request.POST.get('username').replace(" ", "")
-        # print(email)
-        # try:
-        #     exist_code = Code.objects.get(code=cod)
-        #     try:
-        #         username = get_object_or_404(User_Code, code=exist_code.id).user.username
-        #     except Exception as e:
-        #         # return render(request, 'spa/app/event/pages/login.html', {  "error_messages":message_code_no_user })
-        #         return HttpResponseRedirect(reverse('register', args=[str(cod)]))
-        # except Exception as e:
-        #     # print (e)
-        #     context["error_messages"] = "Estamos por abrir"
-        #     return render(request, 'spa/app/event/pages/login.html', context)
-
         user = PasswordlessAuthBackend.authenticate(user=email)
         # print(user)
         if user:

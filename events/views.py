@@ -22,7 +22,33 @@ from django.contrib.auth.decorators import login_required
 
 # from django_weasyprint import WeasyTemplateResponseMixin
 
-@login_required(login_url="/")
+from functools import wraps
+from django.http import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
+
+
+def free_or_private(func):
+	@wraps(func)
+	def wrapper(request, *args, **kwargs):
+		control=ControlDeploy.objects.all()
+		free_page=control[0].free_page 	
+		if not free_page:  # if not coach redirect to home page
+			if request.user.is_authenticated:
+				return func(request, *args, **kwargs)
+			else:
+				return HttpResponseRedirect(reverse('login', args=(), kwargs={}))
+		else:
+				return func(request, *args, **kwargs)
+
+
+	wrapper.__doc__ = func.__doc__
+	wrapper.__name__ = func.__name__
+	return wrapper
+
+
+
+# @login_required(login_url="/")
+@free_or_private
 def create_pdf(request,title):
 	# Create a file-like buffer to receive PDF data.
 	# print(request.POST)
@@ -47,7 +73,8 @@ def create_pdf(request,title):
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 # # lista todos los eventos y los mios para despelgarlos
-# @login_required(login_url="/")
+# # @login_required(login_url="/")
+# @free_or_private
 # def all_events(request):
 # 	ev = Event.objects
 # 	try:
@@ -58,7 +85,8 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def support(request, slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -73,7 +101,8 @@ def support(request, slug):
 	context["rooms"] = rooms
 	return render(request, 'spa/app/event/dashboard/support.html', context)
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def wonder_interaction(request, slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -86,7 +115,8 @@ def wonder_interaction(request, slug):
 
 
 #este es el lobby inicial, sin haber dado click a las paginas laterales, no hay token que indique a donde ir
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def see_event(request,slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -127,7 +157,8 @@ def see_event(request,slug):
 	# 	"my_rooms":rooms_del_evento,"announce":anunc,"program":prog,"speakers":spek,'notes': notes, } )
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def rooms(request,slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -152,11 +183,14 @@ def rooms(request,slug):
 	return render(request, 'spa/app/event/dashboard/rooms.html', context)
 
 
-@login_required(login_url="/")
+# # @login_required(login_url="/")
+# @free_or_private
+@free_or_private
 def room(request,slug,slug_room=""):
 	context={}
 	control=ControlDeploy.objects.all()
 	context["gtag"]=control[0].gtag
+	print("c")
 	try:
 		datos_evento=get_object_or_404(Event, slug=slug)
 	except Exception as e:
@@ -166,7 +200,7 @@ def room(request,slug,slug_room=""):
 	date_now = now()
 	room_del_evento=Room.objects.get(slug=slug_room)
 	live_del_evento=LivePlayer.objects.get(event=datos_evento)
-	notes=Note.objects.filter(user=request.user)
+	# notes=Note.objects.filter(user=request.user)
 	chat_event=Chat.objects.get(event=datos_evento)
 	sponsors = Sponsor.objects.all().order_by('?')
 
@@ -180,14 +214,14 @@ def room(request,slug,slug_room=""):
 	rooms = Room.objects.all()
 	context["rooms"] = rooms
 	# print(notes)
-	if request.method == "POST":
-		Note.objects.create(title=str(request.POST["title"]).replace("/", "_"),text=request.POST["text"],user=request.user)
-		notes=Note.objects.filter(user=request.user)
-		# print('guardado')
-		context["notes"]=notes
-		return render(request, 'spa/app/event/dashboard/room.html',context)
-	else:
-		notes=Note.objects.filter(user=request.user)
+	# if request.method == "POST":
+	# 	Note.objects.create(title=str(request.POST["title"]).replace("/", "_"),text=request.POST["text"],user=request.user)
+	# 	notes=Note.objects.filter(user=request.user)
+	# 	# print('guardado')
+	# 	context["notes"]=notes
+	# 	return render(request, 'spa/app/event/dashboard/room.html',context)
+	# else:
+	# 	notes=Note.objects.filter(user=request.user)
 
 	# si necesitas pasarle los videos descomenta esto, agregale al render la key "videos":prog, y usa el html de program
 	# prog=Video.objects.filter(event=datos_evento)
@@ -196,7 +230,8 @@ def room(request,slug,slug_room=""):
 	return render(request, 'spa/app/event/dashboard/room.html', context)
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def Program(request,slug ):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -228,7 +263,8 @@ def Program(request,slug ):
 	return render(request, 'spa/app/event/dashboard/schedule.html', context )
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def recursos(request,slug ):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -253,7 +289,8 @@ def recursos(request,slug ):
 	return render(request, 'spa/app/event/dashboard/resources.html', context)
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def speaker(request,slug ,slug_speak=""):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -280,7 +317,8 @@ def speaker(request,slug ,slug_speak=""):
 	return render(request, 'spa/app/event/dashboard/speakers.html', context)
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def delete_note(request,title,slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -309,7 +347,8 @@ def delete_note(request,title,slug):
 	return HttpResponseRedirect(reverse('notes', args=[slug]))
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def edit_note(request,title,slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -356,7 +395,8 @@ def edit_note(request,title,slug):
 from django.contrib.auth.models import User
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def notes(request,slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -402,7 +442,8 @@ def notes(request,slug):
 
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def user_guide(request,slug):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -436,7 +477,8 @@ def user_guide(request,slug):
 		return render(request, 'spa/app/event/dashboard/user-guide.html', context)
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 def sponsors(request,slug ):
 	context={}
 	control=ControlDeploy.objects.all()
@@ -465,7 +507,8 @@ from django.conf import settings
 from events.forms import SupportForm
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 # name description image
 def supportspiritual(request,slug):
 	context={}
@@ -525,7 +568,8 @@ def supportspiritual(request,slug):
 from events.forms import TeamEditionForm
 
 
-@login_required(login_url="/")
+# @login_required(login_url="/")
+@free_or_private
 # title content image
 def teamedition(request,slug):
 	context={}
@@ -620,3 +664,36 @@ def legal(request,slug=""):
 	context["title"]=legal.title
 	context["content_string"]=legal.content
 	return render(request,"spa/app/event/pages/legal.html",context)
+
+
+# 
+# from django.contrib.auth.decorators import login_required
+# from django.core.urlresolvers import reverse
+# from django.http import HttpResponseRedirect
+
+# from profiles.models import CoachProfile
+
+
+# def coach_required(function):
+#     def wrapper(request, *args, **kwargs):
+#         decorated_view_func = login_required(request)
+#         if not decorated_view_func.user.is_authenticated():
+#             return decorated_view_func(request)  # return redirect to signin
+
+#         coach = CoachProfile.get_by_email(request.user.email)
+#         if not coach:  # if not coach redirect to home page
+#             return HttpResponseRedirect(reverse('home', args=(), kwargs={}))
+#         else:
+#             return function(request, *args, coach=coach, **kwargs)
+
+#     wrapper.__doc__ = function.__doc__
+#     wrapper.__name__ = function.__name__
+#     return wrapper
+
+#     views.py
+
+# @coach_required
+# def view_master_schedule(request, coach):
+#     """coach param is passed from decorator"""
+#     context = {'schedule': coach.schedule()}
+#     return render(request, 'template.html', context)
