@@ -1,12 +1,12 @@
 server {
     listen 80;
-    server_name  www.vwsupplierqualityday2021.com  vwsupplierqualityday2021.com  161.35.239.8;
+    server_name  143.198.99.237;
     #esto es para permitir archivos de  menos de 100 MB
     client_max_body_size 100M;
 
     #location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        alias /home/OnlineEXP-GLS/static/;#el nombre al final debe ir con /
+        alias /home/porsche/static/;#el nombre al final debe ir con /
     }
 
     location / {

@@ -6,8 +6,8 @@ After=network.target
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/home/Porsche
-ExecStart=/home/Porsche/venv/bin/gunicorn  --access-logfile -  --workers 3  --bind unix:/run/gunicorn.sock  Porsche.wsgi:application
+WorkingDirectory=/home/porsche
+ExecStart=/home/porsche/venv/bin/gunicorn  --access-logfile -  --workers 3  --bind unix:/run/gunicorn.sock  Porsche.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
