@@ -126,7 +126,7 @@ def see_event(request,slug):
 	live_del_evento=LivePlayer.objects.get(event=datos_evento)
 	chat_event=Chat.objects.get(event=datos_evento)
 	date_now = now()
-	lobby_message = 'Bienvenido a Volkswagen NAR Supplier Quality Day 2021'
+	lobby_message = 'Bienvenido a Taycan - PORSCHE'
 	programme = Programme.objects.get(event=datos_evento)
 	programme_elements = ProgrammeElement.objects.filter(programme=programme).order_by('place_in_programme')
 	sponsors = Sponsor.objects.all().order_by('?')

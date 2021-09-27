@@ -5,13 +5,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="author" content="Volkswagen NAR Supplier Quality Day 2021">
+        <meta name="author" content="Taycan - PORSCHE">
         <!-- BEGINS description -->
         <meta name="description" content="{% block description %}  {% endblock %}">
         <!-- ENDS description -->
         <!-- BEGINS Favicon -->
-        <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/Icono_supplier_day.jpeg' %}" />
-        <link rel="icon" href="{% static 'assets/img/Icono_supplier_day.jpeg' %}" type="image/png">
+        <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/porsche/porsche-logo.png' %}" />
+        <link rel="icon" href="{% static 'assets/img/porsche/porsche-logo.png' %}" type="image/png">
         <!-- ENDS Favicon -->
         <!-- BEGINS title -->
         <title>{% block title %} {% endblock %}</title>
@@ -29,12 +29,39 @@
         <!-- ENDS STYLES -->
     </head>
     <!-- BEGINS BODY -->
-    <body class="bg-white" style="background-image: url('{% static 'assets/img/IMAGEN-DE-FONDO-3_vw.jpeg' %}') !important; background-repeat: repeat; background-size: 1100px;">
+    <body class="" style=" background-color:black; background-image: url('{% static 'assets/img/porsche/Bckround-Porsche-home@2x.jpg' %}') !important; background-size: 100%; background-attachment: fixed; background-position: center top; background-repeat: no-repeat;">
+        <style>
+            @font-face {
+              font-family: 'PorscheNext-Bold';
+              src: url({% static 'assets/fonts/PorscheNext-Bold.otf' %});
+            }
+            * {
+                font-family: 'PorscheNext-Bold' !important;
+            }
+            input[type="email"], input[type="password"], input[type="text"], textarea {
+                border: 1px solid white;
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+                color: white;
+            }
+
+            input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, textarea:focus {
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+            }
+
+
+            .input-group-text {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        </style>
         <!-- BEGINS navbar -->
         {% include './navbar.html' %}
         <!-- ENDS navbar -->
          <!-- BEGINS support alert -->
-        <div class="alert float-right alert-secondary col-sm-2 px-2 py-1 m-0" style="max-width: 160px; position: absolute; top:0; right:0;" role="alert">
+        <div HIDDEN class="alert float-right alert-secondary col-sm-2 px-2 py-1 m-0" style="max-width: 160px; position: absolute; top:0; right:0;" role="alert">
             <a class="text-dark" data-toggle="modal" data-target="#supportModal" href="">
             <span class="alert-icon"><i class="ni ni-support-16"></i></span>
             <small><strong class="pl-0">Support</strong></small>
