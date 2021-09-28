@@ -29,7 +29,7 @@
         <!-- ENDS STYLES -->
     </head>
     <!-- BEGINS BODY -->
-    <body class="" style=" background-color:black; background-image: url('{% static 'assets/img/porsche/Bckround-Porsche-home@2x.jpg' %}') !important; background-size: 100%; background-attachment: fixed; background-position: center top; background-repeat: no-repeat;">
+    <body class="" style=" background-color:black; background-image: url('{% static 'assets/img/porsche/Bckround-Porsche-home@2x.jpg' %}'); background-size: 100%; background-attachment: fixed; background-position: center top; background-repeat: no-repeat;">
         <style>
             @font-face {
               font-family: 'PorscheNext-Bold';
@@ -56,6 +56,16 @@
             .input-group-text {
                 background-color: rgba(0, 0, 0, 0.1);
             }
+            @media screen and (max-width: 640px) {
+                              body {
+                                background-color:black;
+                                background-image: url('{% static 'assets/img/porsche/Backroundmobile@2x.jpg' %}') !important;
+                                background-size: 100%;
+                                background-attachment: fixed;
+                                background-position: center top;
+                                background-repeat: no-repeat
+                            }
+                          }
         </style>
         <!-- BEGINS navbar -->
         {% include './navbar.html' %}
